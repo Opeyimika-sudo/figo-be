@@ -7,12 +7,12 @@ from sqlalchemy.engine import URL
 # to access environmental variables
 from dotenv import load_dotenv
 from flask_migrate import Migrate
-from flask_cors import CORS, cross_origin
+# from flask_cors import CORS, cross_origin
 
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -33,7 +33,7 @@ def welcome():
     return jsonify([image.to_dict() for image in images])
 
 @app.route('/populate', methods=['GET'])
-@cross_origin()
+# @cross_origin()
 def populate():
     response = requests.get('https://api.unsplash.com/photos/?client_id=ib1ASB7wMZjI17iwEYu1gb2Udzg4bWhlAEG9a4rlLGw&page=2&per_page=10&order_by=latest')
     data = response.json()
@@ -50,7 +50,7 @@ def populate():
     return jsonify([image.to_dict() for image in images])
 
 @app.route('/add_image/', methods=['POST'])
-@cross_origin()
+# @cross_origin()
 def add_image():
     data = request.get_json()
     if data["data"] == "random": 
@@ -69,7 +69,7 @@ def add_image():
     return jsonify([image.to_dict() for image in images]) 
 
 @app.route('/search_image/', methods=['POST'])
-@cross_origin()
+# @cross_origin()
 def search_image():
     data = request.get_json()
     search_term = data["data"]
@@ -79,7 +79,7 @@ def search_image():
     return jsonify([image.to_dict() for image in images])
 
 @app.route('/delete_image/<int:user_id>/', methods=['POST', 'DELETE', 'OPTIONS'])
-@cross_origin()
+# @cross_origin()
 def delete_image(user_id):
     data = request.get_json()
     image_input = data
